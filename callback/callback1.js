@@ -9,7 +9,7 @@ let doWork = function (job, timer, cb) {
     // callback 慣用設計
     // 第一個參數：error
     // 第二個參數：要回覆的資料
-    cb(null, `完成工作：${dt.toISOString()}`);
+    cb(null, `完成工作：${job} at ${dt.toISOString()}`);
   }, timer);
 };
 
