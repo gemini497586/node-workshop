@@ -1,0 +1,95 @@
+<html lang="en">
+  <head>
+    <title>XHR</title>
+  </head>
+  <body>
+    <button id="syncBtn">同步</button>
+    <button id="asyncBtn">非同步</button>
+    <button id="promiseBtn">promise</button>
+    <button id="countBtn">測試按鈕</button>
+    <div id="count">0</div>
+    <div id="response">準備要顯示訊息</div>
+
+    <script>
+      var response = document.getElementById("response");
+      var syncBtn = document.getElementById("syncBtn");
+      syncBtn.addEventListener("click", function () {
+        // 同步的測試
+        response.innerHTML = "開始同步請求";
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (this.status === 200) {
+            response.innerHTML = `同步請求的response: ${this.responseText}`;
+          } else {
+            response.innerHTML = `同步請求錯誤: ${this.status}`;
+          }
+        };
+
+        // method, url, async (預設值是true)
+        // 同步：false
+        // 非同步(異步)：true
+        xhr.open("GET", "http://18.237.113.31:3000/", false);
+        xhr.send();
+      });
+
+      var asyncBtn = document.getElementById("asyncBtn");
+      asyncBtn.addEventListener("click", function () {
+        // 同步的測試
+        response.innerHTML = "開始非同步請求";
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (this.status === 200) {
+            response.innerHTML = `非同步請求的response: ${this.responseText}`;
+          } else {
+            response.innerHTML = `非同步請求錯誤: ${this.status}`;
+          }
+        };
+
+        // method, url, async (預設值是true)
+        // 同步：false
+        // 非同步(異步)：true
+        xhr.open("GET", "http://18.237.113.31:3000/", true);
+        xhr.send();
+      });
+
+      var promiseBtn = document.getElementById("promiseBtn");
+      function promiseFunction (xhrStatus, xhrResponseText) {
+        return new Promise((resolve, reject) => {
+          if (xhrStatus === 200) {
+            resolve(response.innerHTML = `promise請求的response: ${xhrResponseText}`);
+          } else {
+            reject(response.innerHTML = `promise請求錯誤: ${xhrStatus}`);
+          }
+        });
+      };
+      promiseBtn.addEventListener("click", function () {
+        // 同步的測試
+        response.innerHTML = "開始promise請求";
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          let xhrStatus = this.status;
+          let xhrResponseText = this.responseText;
+          async function asyncFunction(xhrStatus, xhrResponseText) {
+            let hihi =  await promiseFunction(xhrStatus, xhrResponseText);
+            console.log(hihi);
+          };
+          asyncFunction(xhrStatus, xhrResponseText);
+        };
+        
+        // method, url, async (預設值是true)
+        // 同步：false
+        // 非同步(異步)：true
+        xhr.open("GET", "http://18.237.113.31:3000/", true);
+        xhr.send();
+      });
+
+      var countBtn = document.getElementById("countBtn");
+      var count = document.getElementById("count");
+      countBtn.addEventListener("click", function () {
+        count.innerHTML = parseInt(count.innerHTML, 10) + 1;
+      });
+    </script>
+  </body>
+</html>
