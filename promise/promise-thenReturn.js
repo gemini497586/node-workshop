@@ -22,37 +22,31 @@ let dt = new Date();
 console.log(`開始工作 at ${dt.toISOString()}`);
 
 let work01 = doWork("刷牙", 3000, true);
-let work02 = doWork("吃早餐", 5000, true);
-let work03 = doWork("寫功課", 3000, true);
-let work04 = doWork("玩遊戲", 6000, true);
-let work05 = doWork("睡午覺", 8000, true);
-function resolveHandler(resolve) {
-    console.log(resolve, "可以進行下一個");
-};
-function rejectHandler(reject) {
-    console.log(reject);
-};
-
-// work01.then(resolveHandler, rejectHandler);
+// let work02 = doWork("吃早餐", 5000, true);
+// let work03 = doWork("寫功課", 3000, true);
+// let work04 = doWork("玩遊戲", 6000, true);
+// let work05 = doWork("睡午覺", 8000, true);
+// promise 是同步工作，如果先宣告就會先執行，直到遇見setTimeout()這個非同步的，接著丟給暗樁做。
+// 所以 return work02-05 都會在同一個起跑點。 
 
 work01
   .then((result) => {
     console.log("第 1 個 then 被呼叫了", result);
-    return work02;
+    return doWork("吃早餐", 5000, true);
     // 即使我們回傳的是數字，還是會包成 promise 物件
     // Promise.resolve(1)
   })
   .then((result) => {
     console.log("第 2 個 then", result);
-    return work03;
+    return doWork("寫功課", 3000, true);
   })
   .then((result) => {
     console.log("第 3 個 then", result);
-    return work04;
+    return doWork("玩遊戲", 6000, true);
   })
   .then((result) => {
     console.log("第 4 個 then", result);
-    return work05;
+    return doWork("睡午覺", 8000, true);
   })
   .then((result) => {
     console.log("第 5 個 then", result);
