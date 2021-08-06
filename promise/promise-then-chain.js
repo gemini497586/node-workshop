@@ -1,4 +1,4 @@
-// 本次目標：使用promise -> 改善callback hell
+// 本次目標：使用promise then chain -> 改善promise1.js 依舊有波動拳結構的情形
 // 模擬非同步工作 doWork function
 // 做事情順序：開始工作 -> 刷牙(3s) -> 吃早餐(5s) -> 寫功課(3s) -> 玩遊戲(6s) -> 睡午覺(8s)
 
