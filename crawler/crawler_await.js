@@ -1,29 +1,35 @@
 const axios = require("axios");
 const moment = require("moment");
 const fs = require("fs");
-
 let stockCode = "";
-await new Promise((resolve, reject) => {
-  fs.readFile("stock.txt", "utf8", (error, stockCode) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(stockCode);
-    }
+
+// 版本一 async / await 跟 Promise 分開寫
+function resultPromise() {
+  return new Promise((resolve, reject) => {
+    fs.readFile("stock.txt", "utf8", (error, stockCode) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(stockCode);
+      }
+    });
   });
-})
-  .then((stockCode) => {
-    return axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
+}
+
+(async function runAxios() {
+  stockCode = await resultPromise();
+  axios
+    .get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
       params: {
         response: "json",
         date: moment().format("YYYYMMDD"),
         stockNo: stockCode,
       },
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
     });
-  })
-  .then((response) => {
-    console.log(response.data.title);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+})();
