@@ -7,19 +7,23 @@
 
 const axios = require("axios");
 const moment = require("moment");
+const fs = require("fs");
 
-axios
-  .get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
-    params: {
-      response: "json",
-      // date: '20210807',
-      date: moment().format("YYYYMMDD"),
-      stockNo: "2330",
-    },
-  })
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+let stockCode = "";
+fs.readFile("stock.txt", "utf8", (error, stockCode) => {
+  axios
+    .get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
+      params: {
+        response: "json",
+        // date: '20210807',
+        date: moment().format("YYYYMMDD"),
+        stockNo: stockCode,
+      },
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
