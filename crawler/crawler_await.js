@@ -1,7 +1,6 @@
 const axios = require("axios");
 const moment = require("moment");
 const fs = require("fs");
-let stockCode = "";
 
 // 版本一 async / await 跟 Promise 分開寫
 function resultPromise() {
@@ -15,21 +14,22 @@ function resultPromise() {
     });
   });
 }
+function resultAxios(stockCode) {
+  return axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
+    params: {
+      response: "json",
+      date: moment().format("YYYYMMDD"),
+      stockNo: stockCode,
+    },
+  });
+}
 
-(async function runAxios() {
-  stockCode = await resultPromise();
-  axios
-    .get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
-      params: {
-        response: "json",
-        date: moment().format("YYYYMMDD"),
-        stockNo: stockCode,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+(async function () {
+  try {
+    let stockCode = await resultPromise();
+    let response = await resultAxios(stockCode);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
 })();
