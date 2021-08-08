@@ -18,8 +18,8 @@ connection.connect((error) => {
   }
 });
 
-let stockCode = '';
-let checkStockCode = function () {
+let stockCode = "";
+function checkStockCode() {
   return new Promise((resolve, reject) => {
     connection.query(
       "SELECT * FROM stock WHERE stock_id = ?",
@@ -32,7 +32,7 @@ let checkStockCode = function () {
       }
     );
   });
-};
+}
 
 function resultPromise(checkedStockCode) {
   return new Promise((resolve, reject) => {
@@ -61,7 +61,7 @@ function resultAxios(stockNo) {
     let checkedStockCode = await checkStockCode();
     let stockNo = await resultPromise(checkedStockCode);
     let response = await resultAxios(stockNo);
-    console.log(response.data.title);
+    console.log(response.data);
   } catch (error) {
     console.error(error);
   } finally {
