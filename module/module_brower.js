@@ -2,7 +2,7 @@ let Brower = 'Google Chrome';
 let time = 'now: 20210814';
 let errormsg = 'Error state: 404';
 
-function setBrower() {
+function getBrower() {
     return Brower
 };
 function showBrowerName() {
@@ -26,7 +26,7 @@ function showBrowerError() {
 
 
 // 雖然輸出的為module.exports但用點的方式可以更改到原生物件
-// exports.setBrower = setBrower;
+// exports.getBrower = getBrower;
 // exports.showBrowerName = showBrowerName;
 // exports.showBrowerTime = showBrowerTime;
 
@@ -35,7 +35,7 @@ function showBrowerError() {
 // 想整理成物件看起來比較舒服，但其實不行。
 // 因為這樣會創出一個新物件，而module.exports還會是對應"空物件"
 // exports = {
-//   setBrower,
+//   getBrower,
 //   showBrowerName,
 //   showBrowerTime
 // }
@@ -44,7 +44,7 @@ function showBrowerError() {
 // 所以如果還是要用漂亮寫法，直接改module.exports也是可以的，
 // 雖然exports依舊是空的但是誰管你，畢竟出去的是module.exports
 module.exports = {
-    setBrower,
+    getBrower,
     showBrowerName,
     showBrowerTime
 }
